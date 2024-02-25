@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Beauty Service Finder</title>
+    
+</head>
+<body>
+<nav class="container-fluid">
+    <ul>
+        <li><strong>BeautyFinder</strong></li>
+    </ul>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" role="button">Contact</a></li>
+    </ul>
+</nav>
+<main class="container">
+    <div class="grid">
+        <section>
+            <section class="search-section">
+                <div class="left-section">
+                    <h2>Find Beauty Services</h2>
+                    <h3>Search for beauty professionals in your city</h3>
+                </div>
+                <div class="right-section">
+                    <p>Use the search box below to find beauty professionals near you. You can search by city, service type, and more.</p>
+                    <input type="text" id="search" name="search" placeholder="Enter city or service" aria-label="Search for beauty services" required>
+                    <button type="submit" onclick="event.preventDefault()">Search</button>
+                </div>
+            </section>
+            <h2>Professional Profiles</h2>
+            <div class="carousel-container">
+                <div class="carousel">
+                    <figure>
+                        <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
+                        <div class="carousel-content">
+                            <p>Description of the Beauty Professional. Experience, services offered, and contact information.</p>
+                            <a href="#" target="_blank">View Profile</a>
+                        </div>
+                    </figure>
+                    <figure>
+                        <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
+                        <div class="carousel-content">
+                            <p>Description of the Beauty Professional. Experience, services offered, and contact information.</p>
+                            <a href="#" target="_blank">View Profile</a>
+                        </div>
+                    </figure>
+                    <!-- Repeat for each profile -->
+                </div>
+                <span class="arrow left" onclick="moveCarousel(-1)">&#10094;</span>
+                <span class="arrow right" onclick="moveCarousel(1)">&#10095;</span>
+            </div>
+            <section aria-label="Book a Service">
+                <h2>Book a Service</h2>
+                <p>Directly book a beauty service with a professional. Choose a date and time that suits you.</p>
+                <input type="date" id="date" name="date" required>
+                <input type="time" id="time" name="time" required>
+                <button type="submit" onclick="event.preventDefault()">Book Now</button>
+            </section>
+        </section>
+    </div>
+</main>
+<section aria-label="Subscribe example">
+    <div class="container">
+        <article>
+            <hgroup>
+                <h2>Stay Updated</h2>
+                <h3>Subscribe to our newsletter</h3>
+            </hgroup>
+            <form class="grid">
+                <input type="text" id="firstname" name="firstname" placeholder="First Name" aria-label="First Name" required>
+                <input type="email" id="email" name="email" placeholder="Email Address" aria-label="Email Address" required>
+                <button type="submit" onclick="event.preventDefault()">Subscribe</button>
+            </form>
+        </article>
+    </div>
+</section>
+<footer class="container">
+    <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
