@@ -8,7 +8,7 @@ from sqlalchemy import Column, String, ForeignKey
 
 
 class Professional(BaseModel, Base):
-    """Representation of Review """
+    """Representation of Professional """
     if models.storage_t == 'db':
         __tablename__ = 'professionals'
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -16,6 +16,7 @@ class Professional(BaseModel, Base):
         service_id = Column(String(60), ForeignKey('services.id'), nullable=False)
         biography = Column(String(1024), nullable=False)
         work hours = Column(String(1024), nullable=False)
+        contactforms = relationship("Contactform", backref="professional")
     else:
         user_id = ""
         city_id = ""
