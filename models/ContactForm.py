@@ -8,7 +8,7 @@ from sqlalchemy import Column, String, ForeignKey
 
 
 class Contactform(BaseModel, Base):
-    """Representation of Review """
+    """Representation of Contactform """
     if models.storage_t == 'db':
         __tablename__ = 'contactforms'
         professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
@@ -20,5 +20,5 @@ class Contactform(BaseModel, Base):
         message = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes Review"""
+        """initializes Contactform"""
         super().__init__(*args, **kwargs)
