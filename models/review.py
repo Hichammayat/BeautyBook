@@ -9,15 +9,12 @@ from sqlalchemy import Column, String, ForeignKey
 
 class Review(BaseModel, Base):
     """Representation of Review """
-    if models.storage_t == 'db':
-        __tablename__ = 'reviews'
-        professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-        comments = Column(String(1024), nullable=False)
-    else:
-        professional_id = ""
-        user_id = ""
-        comments = ""
+    
+    __tablename__ = 'reviews'
+    professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    comments = Column(String(1024), nullable=False)
+    
 
     def __init__(self, *args, **kwargs):
         """initializes Review"""

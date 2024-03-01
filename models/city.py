@@ -10,14 +10,13 @@ from sqlalchemy.orm import relationship
 
 class City(BaseModel, Base):
     """Representation of city """
-    if models.storage_t == "db":
-        __tablename__ = 'cities'
-        name = Column(String(128), nullable=False)
-        professional = relationship("Professional",
+    
+    __tablename__ = 'cities'
+    name = Column(String(128), nullable=False)
+    professional = relationship("Professional",
                               backref="cities",
                               cascade="all, delete, delete-orphan")
-    else:
-        name = ""
+    
 
     def __init__(self, *args, **kwargs):
         """initializes city"""

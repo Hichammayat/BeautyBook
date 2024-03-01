@@ -9,15 +9,12 @@ from sqlalchemy import Column, String, ForeignKey
 
 class Contactform(BaseModel, Base):
     """Representation of Contactform """
-    if models.storage_t == 'db':
-        __tablename__ = 'contactforms'
-        professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-        message = Column(String(1024), nullable=False)
-    else:
-        professional_id = ""
-        user_id = ""
-        message = ""
+    
+    __tablename__ = 'contactforms'
+    professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    message = Column(String(1024), nullable=False)
+    
 
     def __init__(self, *args, **kwargs):
         """initializes Contactform"""

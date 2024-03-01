@@ -5,6 +5,7 @@ Contains the class DBStorage
 
 
 import models
+
 from models.base_model import BaseModel, Base
 from models.city import City
 from models.ContactForm import Contactform
