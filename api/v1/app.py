@@ -1,41 +1,30 @@
-#!/usr/bin/python3
-""" Flask Application """
+"""starts the Lyrics for Learning API Flask app"""
+
+import os
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from os import environ
-from flask import Flask, render_template, make_response, jsonify
+from flask import Blueprint
 from flask_cors import CORS
-from flasgger import Swagger
-from flasgger.utils import swag_from
 
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
-# cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-
-
-@app.teardown_appcontext
-def close_db(error):
-    """ Close Storage """
-    storage.close()
+cors = CORS(app, resources={r"/*": {"origins": 'http://0.0.0.0:5000'}})
 
 
 @app.errorhandler(404)
-def not_found(error):
-    """ 404 Error
-    ---
-    responses:
-      404:
-        description: a resource was not found
+def page_not_found(e):
+    """Error handling, 404"""
+    return jsonify({"error": "Not found"}), 404
+
+
+@app.teardown_appcontext
+def app_teardown(self):
+    """remove the current SQLAlchemy Session when the application context ends
     """
-    return make_response(jsonify({'error': "Not found"}), 404)
+    storage.close()
 
-app.config['SWAGGER'] = {
-    'title': 'Beautybook Restful API',
-    'uiversion': 3
-}
-
-Swagger(app)
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host=os.getenv('LYRICS_API_HOST') or '0.0.0.0',
+            port=os.getenv('LYRICS_API_PORT') or 5001,
+            threaded=True)
