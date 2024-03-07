@@ -1,0 +1,20 @@
+"""This module starts the Lyrics_For_Learning Flask web application and defines endpoints
+"""
+from flask import Flask
+from flask import render_template
+from models import storage
+
+app = Flask(__name__)
+
+@app.route('/', strict_slashes=False)
+def display_homepage():
+    """handles request for homepage"""
+    return render_template('homepage.html')
+
+@app.teardown_appcontext
+def teardown_db(self):
+    """removes the current SQLAlchemy Session"""
+    storage.close()
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
