@@ -26,5 +26,5 @@ def app_teardown(self):
 
 if __name__ == "__main__":
     app.run(host=os.getenv('BEAUTYBOOK_API_HOST') or '0.0.0.0',
-            port=os.getenv('BEAUTYBOOK_API_PORT') or 5001,
+            port=os.getenv('HBNB_API_PORT') or 5001,
             threaded=True)
