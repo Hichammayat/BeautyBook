@@ -12,7 +12,6 @@ class Review(BaseModel, Base):
     
     __tablename__ = 'reviews'
     professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
-    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     comments = Column(String(1024), nullable=False)
     
 
