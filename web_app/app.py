@@ -2,6 +2,7 @@
 """
 from flask import request, redirect, url_for, flash, render_template, Flask
 import requests  # Assurez-vous que requests est installé
+from models import storage
 
 app = Flask(__name__)
 app.secret_key = 'beauty_app'
@@ -46,10 +47,30 @@ def register():
     # Si la méthode est GET ou si la création a échoué, afficher simplement le formulaire d'inscription
     return render_template('register.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']  # Ce sera utilisé plus tard pour l'authentification
+
+        # Ici, nous utiliserons requests pour appeler votre API /api/v1/professionals/exist
+        try:
+            response = requests.post('http://localhost:5001/api/v1/professionals/exist', json={'email': email})
+            if response.status_code == 200 and response.json()['exists']:
+                # L'utilisateur existe, redirigez-le vers la page de profil ou autre
+                # Vous devrez implémenter la logique d'authentification ici
+                return redirect(url_for('display_homepage'))  # Changez 'display_homepage' par votre page de profil
+            else:
+                flash('Email non trouvé ou mot de passe incorrect. Veuillez réessayer ou vous enregistrer.')
+        except requests.RequestException as e:
+            flash(str(e))
+
+    return render_template('login.html')
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Removes the current SQLAlchemy Session (if applicable)"""
-    storage.close()``  # Si vous n'utilisez pas SQLAlchemy, cette fonction peut rester vide ou être supprimée
+    storage.close()  # Si vous n'utilisez pas SQLAlchemy, cette fonction peut rester vide ou être supprimée
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
