@@ -19,7 +19,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Contactform": Contactform, "City": City,
-           "Professional": Professional, "Review": Review, "Service": Service, "User": User}
+           "Professional": Professional, "Review": Review, "Service": Service}
 
 
 class DBStorage:

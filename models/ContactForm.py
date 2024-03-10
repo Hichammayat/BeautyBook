@@ -12,7 +12,6 @@ class Contactform(BaseModel, Base):
     
     __tablename__ = 'contactforms'
     professional_id = Column(String(60), ForeignKey('professionals.id'), nullable=False)
-    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     message = Column(String(1024), nullable=False)
     
 

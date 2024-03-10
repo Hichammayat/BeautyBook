@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" objects that handle all default RestFul API actions for Professionals """
+""" objects that handle all default RestFul API actions for Users """
 from models.professional import Professional
 from models import storage
 from api.v1.views import app_views
@@ -8,10 +8,11 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/professionals', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/professional/all_prodfessionals.yml')
+@swag_from('documentation/professional/all_professionals.yml')
 def get_professionals():
     """
-    Retrieves the list of all professionals objects
+    Retrieves the list of all professional objects
+    or a specific user
     """
     all_professionals = storage.all(Professional).values()
     list_professionals = []
@@ -23,7 +24,7 @@ def get_professionals():
 @app_views.route('/professionals/<professional_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/professional/get_professional.yml', methods=['GET'])
 def get_professional(professional_id):
-    """ Retrieves a professional """
+    """ Retrieves an professional """
     professional = storage.get(Professional, professional_id)
     if not professional:
         abort(404)
@@ -59,10 +60,10 @@ def post_professional():
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if 'biography' not in request.get_json():
-        abort(400, description="Missing biography")
-    if 'work_hours' not in request.get_json():
-        abort(400, description="Missing work_hours")
+    if 'email' not in request.get_json():
+        abort(400, description="Missing email")
+    if 'password' not in request.get_json():
+        abort(400, description="Missing password")
 
     data = request.get_json()
     instance = Professional(**data)
@@ -84,11 +85,11 @@ def put_professional(professional_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at']
+    ignore = ['id', 'email', 'created_at', 'updated_at']
 
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
-            setattr(user, key, value)
+            setattr(professional, key, value)
     storage.save()
-    return make_response(jsonify(user.to_dict()), 200)
+    return make_response(jsonify(professional.to_dict()), 200)
