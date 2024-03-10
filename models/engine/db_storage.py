@@ -11,7 +11,6 @@ from models.city import City
 from models.ContactForm import Contactform
 from models.review import Review
 from models.service import Service
-from models.user import User
 from models.professional import Professional
 from os import getenv
 import sqlalchemy

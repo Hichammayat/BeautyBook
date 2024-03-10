@@ -70,6 +70,25 @@ def post_professional():
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
+@app_views.route('/professionals/exist', methods=['POST'], strict_slashes=False)
+def check_professional_existence():
+    """
+    Check if a professional exists by email
+    """
+    data = request.get_json()
+    if not data or 'email' not in data:
+        return jsonify({"error": "Missing email"}), 400
+
+    email = data['email']
+    all_professionals = storage.all(Professional).values()
+    for professional in all_professionals:
+        if professional.email == email:
+            # Found a professional with the given email
+            return jsonify({"exists": True, "professional_id": professional.id}), 200
+
+    # No professional found with the given email
+    return jsonify({"exists": False}), 404
+
 
 @app_views.route('/professionals/<professional_id>', methods=['PUT'], strict_slashes=False)
 @swag_from('documentation/professional/put_professional.yml', methods=['PUT'])
