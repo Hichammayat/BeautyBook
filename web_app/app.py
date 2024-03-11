@@ -13,6 +13,11 @@ def display_homepage():
     """Handles request for homepage"""
     return render_template('homepage.html')
 
+@app.route('/profile', strict_slashes=False)
+def display_profile():
+    """Handles request for profilepage"""
+    return render_template('profile.html')
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -59,7 +64,7 @@ def login():
             if response.status_code == 200 and response.json()['exists']:
                 # L'utilisateur existe, redirigez-le vers la page de profil ou autre
                 # Vous devrez implémenter la logique d'authentification ici
-                return redirect(url_for('display_homepage'))  # Changez 'display_homepage' par votre page de profil
+                return redirect(url_for('display_profile'))  # Changez 'display_homepage' par votre page de profil
             else:
                 flash('Email non trouvé ou mot de passe incorrect. Veuillez réessayer ou vous enregistrer.')
         except requests.RequestException as e:
