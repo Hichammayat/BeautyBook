@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Edit Professional Profile</title>
+</head>
+<body>
+<nav class="container-fluid">
+    <ul>
+        <li><strong>BeautyFinder</strong></li>
+    </ul>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#" role="button">Log In</a></li>
+    </ul>
+</nav>
+<main class="container">
+    <div class="grid">
+        <section>
+            <h2>Edit Your Profile</h2>
+            <form>
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="phone-number">Phone Number:</label>
+                <input type="text" id="phone-number" name="phone-number">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+                <label for="biography">Biography:</label>
+                <textarea id="biography" name="biography" rows="4"></textarea>
+                <label for="work-hours">Work Hours:</label>
+                <input type="text" id="work-hours" name="work-hours">
+                <button type="submit">Save Changes</button>
+            </form>
+        </section>
+    </div>
+</main>
+<footer class="container">
+    <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
+</footer>
+</body>
+</html>
