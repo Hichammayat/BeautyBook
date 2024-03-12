@@ -1,6 +1,6 @@
 """This module starts the beautybook Flask web application and defines endpoints
 """
-from flask import request, redirect, url_for, flash, render_template, Flask
+from flask import request, redirect, url_for, flash, render_template, Flask, session 
 import requests  # Assurez-vous que requests est installé
 from models import storage
 
@@ -10,13 +10,23 @@ app.secret_key = 'beauty_app'
 
 @app.route('/', strict_slashes=False)
 def display_homepage():
-    """Handles request for homepage"""
-    return render_template('homepage.html')
+    """Handles request for homepage and fetches professionals to display"""
+    api_url = "http://localhost:5001/api/v1/professionals"
+    try:
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            professionals = response.json()
+        else:
+            professionals = []
+    except requests.RequestException:
+        professionals = []
 
-@app.route('/profile', strict_slashes=False)
-def display_profile():
+    return render_template('homepage.html', professionals=professionals)
+
+@app.route('/Editprofile', strict_slashes=False)
+def display_Editprofile():
     """Handles request for profilepage"""
-    return render_template('profile.html')
+    return render_template('Editprofile.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -64,6 +74,8 @@ def login():
             if response.status_code == 200 and response.json()['exists']:
                 # L'utilisateur existe, redirigez-le vers la page de profil ou autre
                 # Vous devrez implémenter la logique d'authentification ici
+                professional_id = response.json().get('professional_id')
+                session['professional_id'] = professional_id  # Stockage de l'ID dans la session
                 return redirect(url_for('display_profile'))  # Changez 'display_homepage' par votre page de profil
             else:
                 flash('Email non trouvé ou mot de passe incorrect. Veuillez réessayer ou vous enregistrer.')
@@ -71,6 +83,38 @@ def login():
             flash(str(e))
 
     return render_template('login.html')
+
+@app.route('/profile', strict_slashes=False)
+def display_profile():
+    """Handles request for profilepage"""
+    professional_id = session.get('professional_id', None)  # Assumons que l'ID est stocké en session
+    if professional_id:
+        try:
+            response = requests.get(f'http://localhost:5001/api/v1/professionals/{professional_id}')
+            if response.status_code == 200:
+                user_info = response.json()
+                return render_template('profile.html', user_info=user_info)
+            else:
+                flash('Impossible de récupérer les informations du profil.')
+                return redirect(url_for('login'))
+        except requests.RequestException as e:
+            flash(str(e))
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+@app.route('/logout')
+def logout():
+    # Effacer les données de l'utilisateur de la session
+    session.clear()
+    # Vous pouvez aussi utiliser session.pop('professional_id', None) si vous voulez juste enlever l'ID et non effacer toute la session
+
+    # Rediriger l'utilisateur vers la page de connexion ou la page d'accueil
+    return redirect(url_for('display_homepage'))
+
+@app.route('/AboutUs', strict_slashes=False)
+def display_AboutUs():
+    """Handles request for profilepage"""
+    return render_template('AboutUs.html')
 
 @app.teardown_appcontext
 def teardown_db(exception):

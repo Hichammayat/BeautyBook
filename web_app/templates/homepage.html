@@ -15,8 +15,8 @@
     </ul>
     <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#" role="button">Log In</a></li>
+        <li><a href="/AboutUs">About</a></li>
+        <li><a href="/login" role="button">Log In</a></li>
     </ul>
 </nav>
 <main class="container">
@@ -35,33 +35,24 @@
             </section>
             <h2>Professional Profiles</h2>
             <div class="carousel-container">
+                {% for professional in professionals %}
                 <div class="carousel">
                     <figure>
                         <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
                         <div class="carousel-content">
-                            <p>Description of the Beauty Professional. Experience, services offered, and contact information.</p>
+                            <h3>{{ professional.first_name }} {{ professional.last_name }}</h3>
+                            <p>{{ professional.biography }}</p>
                             <a href="#" target="_blank">View Profile</a>
                         </div>
                     </figure>
-                    <figure>
-                        <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
-                        <div class="carousel-content">
-                            <p>Description of the Beauty Professional. Experience, services offered, and contact information.</p>
-                            <a href="#" target="_blank">View Profile</a>
-                        </div>
-                    </figure>
+                    
                     <!-- Repeat for each profile -->
                 </div>
+                {% endfor %}
                 <span class="arrow left" onclick="moveCarousel(-1)">&#10094;</span>
                 <span class="arrow right" onclick="moveCarousel(1)">&#10095;</span>
+                
             </div>
-            <section aria-label="Book a Service">
-                <h2>Book a Service</h2>
-                <p>Directly book a beauty service with a professional. Choose a date and time that suits you.</p>
-                <input type="date" id="date" name="date" required>
-                <input type="time" id="time" name="time" required>
-                <button type="submit" onclick="event.preventDefault()">Book Now</button>
-            </section>
         </section>
     </div>
 </main>
@@ -83,6 +74,20 @@
 <footer class="container">
     <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
 </footer>
-<script src="script.js"></script>
+<!--<script src="../static/scripts/carroussel.js"></script>-->
+<script>
+    let currentIndex = 0;
+    function moveCarousel(direction) {
+        const carousel = document.querySelector('.carousel');
+        const totalItems = document.querySelectorAll('.carousel figure').length;
+        currentIndex += direction;
+        if (currentIndex >= totalItems) {
+            currentIndex = 0;
+        } else if (currentIndex < 0) {
+            currentIndex = totalItems - 1;
+        }
+        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+</script>
 </body>
 </html>
