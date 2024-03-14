@@ -116,6 +116,11 @@ def display_AboutUs():
     """Handles request for profilepage"""
     return render_template('AboutUs.html')
 
+@app.route('/profileBook', strict_slashes=False)
+def display_profileBook():
+    """Handles request for profilepage"""
+    return render_template('profileBooking.html')
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Removes the current SQLAlchemy Session (if applicable)"""
