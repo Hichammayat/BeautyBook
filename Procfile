@@ -1,1 +1,1 @@
-web: puthon -m web_app.app
+web: python -m web_app.app
