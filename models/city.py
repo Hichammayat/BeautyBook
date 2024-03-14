@@ -12,7 +12,7 @@ class City(BaseModel, Base):
     """Representation of city """
     
     __tablename__ = 'cities'
-    name = Column(String(60), ForeignKey('professionals.city'), nullable=False)
+    name = Column(String(60), nullable=False)
     
     
 
