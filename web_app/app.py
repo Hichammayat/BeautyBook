@@ -1,9 +1,9 @@
 """This module starts the beautybook Flask web application and defines endpoints
 """
+import os
 from flask import request, redirect, url_for, flash, render_template, Flask, session 
 import requests  # Assurez-vous que requests est installé
 from models import storage
-import os
 
 app = Flask(__name__)
 app.secret_key = 'beauty_app'
