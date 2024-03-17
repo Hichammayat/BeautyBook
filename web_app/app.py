@@ -1,9 +1,7 @@
 """This module starts the beautybook Flask web application and defines endpoints
 """
-<<<<<<< HEAD
+
 import os
-=======
->>>>>>> 99fda3001e5dc7f95421ecd0c897d66d4819e8f8
 from flask import request, redirect, url_for, flash, render_template, Flask, session 
 import requests  # Assurez-vous que requests est installé
 from models import storage
@@ -15,11 +13,9 @@ app.secret_key = 'beauty_app'
 @app.route('/', strict_slashes=False)
 def display_homepage():
     """Handles request for homepage and fetches professionals to display"""
-<<<<<<< HEAD
+
     api_url = "http://0.0.0.0:5001/api/v1/professionals"
-=======
-    api_url = "http://localhost:5001/api/v1/professionals"
->>>>>>> 99fda3001e5dc7f95421ecd0c897d66d4819e8f8
+
     try:
         response = requests.get(api_url)
         if response.status_code == 200:
@@ -50,11 +46,9 @@ def register():
         }
 
         # URL de l'API externe où vous voulez créer un utilisateur
-<<<<<<< HEAD
+
         api_url = "http://0.0.0.0:5001/api/v1/professionals"
-=======
-        api_url = "http://localhost:5001/api/v1/professionals"
->>>>>>> 99fda3001e5dc7f95421ecd0c897d66d4819e8f8
+
 
         try:
             # Envoyer la requête à l'API externe
@@ -82,11 +76,7 @@ def login():
 
         # Ici, nous utiliserons requests pour appeler votre API /api/v1/professionals/exist
         try:
-<<<<<<< HEAD
             response = requests.post('http://0.0.0.0:5001/api/v1/professionals/exist', json={'email': email})
-=======
-            response = requests.post('http://localhost:5001/api/v1/professionals/exist', json={'email': email})
->>>>>>> 99fda3001e5dc7f95421ecd0c897d66d4819e8f8
             if response.status_code == 200 and response.json()['exists']:
                 # L'utilisateur existe, redirigez-le vers la page de profil ou autre
                 # Vous devrez implémenter la logique d'authentification ici
@@ -106,11 +96,8 @@ def display_profile():
     professional_id = session.get('professional_id', None)  # Assumons que l'ID est stocké en session
     if professional_id:
         try:
-<<<<<<< HEAD
             response = requests.get(f'http://0.0.0.0:5001/api/v1/professionals/{professional_id}')
-=======
-            response = requests.get(f'http://localhost:5001/api/v1/professionals/{professional_id}')
->>>>>>> 99fda3001e5dc7f95421ecd0c897d66d4819e8f8
+
             if response.status_code == 200:
                 user_info = response.json()
                 return render_template('profile.html', user_info=user_info)
