@@ -14,7 +14,7 @@ app.secret_key = 'beauty_app'
 def display_homepage():
     """Handles request for homepage and fetches professionals to display"""
 
-    api_url = "http://0.0.0.0:5001/api/v1/professionals"
+    api_url = "http://localhost:5001/api/v1/professionals"
 
     try:
         response = requests.get(api_url)
@@ -47,7 +47,7 @@ def register():
 
         # URL de l'API externe où vous voulez créer un utilisateur
 
-        api_url = "http://0.0.0.0:5001/api/v1/professionals"
+        api_url = "http://localhost:5001/api/v1/professionals"
 
 
         try:
@@ -76,7 +76,7 @@ def login():
 
         # Ici, nous utiliserons requests pour appeler votre API /api/v1/professionals/exist
         try:
-            response = requests.post('http://0.0.0.0:5001/api/v1/professionals/exist', json={'email': email})
+            response = requests.post('http://localhost:5001/api/v1/professionals/exist', json={'email': email})
             if response.status_code == 200 and response.json()['exists']:
                 # L'utilisateur existe, redirigez-le vers la page de profil ou autre
                 # Vous devrez implémenter la logique d'authentification ici
@@ -96,7 +96,7 @@ def display_profile():
     professional_id = session.get('professional_id', None)  # Assumons que l'ID est stocké en session
     if professional_id:
         try:
-            response = requests.get(f'http://0.0.0.0:5001/api/v1/professionals/{professional_id}')
+            response = requests.get(f'http://localhost:5001/api/v1/professionals/{professional_id}')
 
             if response.status_code == 200:
                 user_info = response.json()
