@@ -105,3 +105,10 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
+
+    def get_professionals_by_city(self, city_id):
+        """Get all professionals by city ID"""
+        if not city_id:
+            return []
+
+        return self.__session.query(Professional).filter(Professional.city_id == city_id).all()

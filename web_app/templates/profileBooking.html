@@ -21,7 +21,7 @@
     <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">About</a></li>
-        <li><a href="#" role="button">Log out</a></li>
+        <li><a href="{{ url_for('logout') }}" role="button">Log out</a></li>
     </ul>
 </nav>
 <main class="container">
@@ -29,7 +29,7 @@
         <section>
             <hgroup>
                 <h2>Professional Profile</h2>
-                <h3>Amina Elkhatib</h3>
+                <h3>{{ user_info['name'] }}</h3>
             </hgroup>
             <figure>
                 <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" style="width:100%;max-width:400px;height:auto;" />
@@ -38,7 +38,7 @@
             <h3>About Me</h3>
             <p>I am a dedicated beauty professional with a passion for enhancing my clients' natural beauty. My services include [list services based on the model], and I am located in [city].</p>
             <h3>Contact Information</h3>
-            <p>Email: amina.makeup@fesbeauty.com<br>Phone: 0622869285<br>City: casablanca</p>
+            <p>Email: {{ user_info['email'] }}<br>Phone: {{ user_info['phone_number'] }}<br>City: casablanca</p>
             <h3>Biography</h3>
             <p>[biography]</p>
             <h3>Work Hours</h3>

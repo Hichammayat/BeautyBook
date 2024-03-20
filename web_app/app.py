@@ -42,7 +42,7 @@ def register():
             'first_name': request.form['first_name'],
             'last_name': request.form['last_name'],
             'phone_number': request.form['phone_number'],
-            'city': request.form['city']
+            'city_id': request.form['city_id']
         }
 
         # URL de l'API externe où vous voulez créer un utilisateur
@@ -64,9 +64,23 @@ def register():
         except requests.RequestException as e:
             # Gérer les exceptions de requêtes, comme un problème de réseau
             flash(str(e))
+    
+    else:
+        # Récupérer la liste des villes à partir de l'API
+        cities_url = "http://localhost:5001/api/v1/cities"
+        try:
+            cities_response = requests.get(cities_url)
+            if cities_response.status_code == 200:
+                cities = cities_response.json()  # Supposons que cela renvoie une liste de villes
+            else:
+                cities = []
+                flash('Failed to load cities.')
+        except requests.RequestException as e:
+            cities = []
+            flash(str(e))
 
     # Si la méthode est GET ou si la création a échoué, afficher simplement le formulaire d'inscription
-    return render_template('register.html')
+    return render_template('register.html', cities=cities)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -123,10 +137,16 @@ def display_AboutUs():
     """Handles request for profilepage"""
     return render_template('AboutUs.html')
 
-@app.route('/profileBook', strict_slashes=False)
-def display_profileBook():
-    """Handles request for profilepage"""
-    return render_template('profileBooking.html')
+@app.route('/profileBook/<professional_id>', strict_slashes=False)
+def display_profilebook(professional_id):
+    """Handles request for profile page and fetches professional details via API."""
+    api_url = f"http://localhost:5001/api/v1/professionals/{professional_id}"
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        user_info = response.json()
+        return render_template('profileBooking.html', user_info=user_info)
+    else:
+        flash('Impossible de récupérer les informations du profil.')
 
 @app.teardown_appcontext
 def teardown_db(exception):

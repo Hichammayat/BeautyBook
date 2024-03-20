@@ -30,25 +30,24 @@
                 <div class="right-section">
                     <p>Use the search box below to find beauty professionals near you. You can search by city, service type, and more.</p>
                     <input type="text" id="search" name="search" placeholder="Enter city or service" aria-label="Search for beauty services" required>
-                    <button type="submit" onclick="event.preventDefault()">Search</button>
+                    <button type="submit">Search</button>
                 </div>
             </section>
             <h2>Professional Profiles</h2>
             <div class="carousel-container">
-                {% for professional in professionals %}
                 <div class="carousel">
+                    {% for professional in professionals %}
                     <figure>
                         <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
                         <div class="carousel-content">
                             <h3>{{ professional.first_name }} {{ professional.last_name }}</h3>
                             <p>{{ professional.biography }}</p>
-                            <a href="#" target="_blank">View Profile</a>
+                            <a href="/profileBook/{{ professional.id }}" target="_blank">View Profile</a>
                         </div>
                     </figure>
-                    
+                    {% endfor %}
                     <!-- Repeat for each profile -->
                 </div>
-                {% endfor %}
                 <span class="arrow left" onclick="moveCarousel(-1)">&#10094;</span>
                 <span class="arrow right" onclick="moveCarousel(1)">&#10095;</span>
                 
@@ -74,7 +73,7 @@
 <footer class="container">
     <small><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></small>
 </footer>
-<!--<script src="../static/scripts/carroussel.js"></script>-->
+<script src="../static/scripts/filtersearch.js"></script>
 <script>
     let currentIndex = 0;
     function moveCarousel(direction) {

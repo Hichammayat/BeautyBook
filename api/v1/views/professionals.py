@@ -5,6 +5,8 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from flasgger.utils import swag_from
+from models.city import City
+from flask import current_app
 
 
 @app_views.route('/professionals', methods=['GET'], strict_slashes=False)
@@ -31,6 +33,32 @@ def get_professional(professional_id):
 
     return jsonify(professional.to_dict())
 
+@app_views.route('/professionals/city/<city_name>', methods=['GET'], strict_slashes=False)
+def get_professionals_by_city_name(city_name):
+    current_app.logger.info(f"Recherche de professionnels pour la ville : {city_name}")
+
+    city = next((city_obj for city_obj in storage.all(City).values() if city_obj.name.lower() == city_name.lower()), None)
+
+    if city is None:
+        current_app.logger.error(f"Ville non trouvée : {city_name}")
+        return jsonify({"error": "City not found"}), 404
+
+    current_app.logger.info(f"Ville trouvée : {city.name} avec ID {city.id}")
+
+    professionals_in_city = []
+    for professional in storage.all(Professional).values():
+        current_app.logger.info(f"Vérification du professionnel : {professional.first_name}, City ID: {professional.city_id}")
+        if str(professional.city_id) == str(city.id):  # Convertit en chaîne pour une comparaison sûre
+            professionals_in_city.append(professional.to_dict())
+
+    if not professionals_in_city:
+        current_app.logger.error(f"Aucun professionnel trouvé pour la ville : {city_name}")
+        return jsonify({"error": "No professionals found for the given city name"}), 404
+
+    return jsonify(professionals_in_city)
+
+
+
 
 @app_views.route('/professionals/<professional_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -48,7 +76,9 @@ def delete_professional(professional_id):
     storage.delete(professional)
     storage.save()
 
-    return make_response(jsonify({}), 200)
+    return make_response(jsonify({}), 200) 
+
+
 
 
 @app_views.route('/professionals', methods=['POST'], strict_slashes=False)
@@ -57,15 +87,18 @@ def post_professional():
     """
     Creates a professional
     """
-    if not request.get_json():
+    data = request.get_json()
+
+    if not data:
         abort(400, description="Not a JSON")
 
-    if 'email' not in request.get_json():
-        abort(400, description="Missing email")
-    if 'password' not in request.get_json():
-        abort(400, description="Missing password")
+    for field in ['email', 'password', 'city_id']:
+        if field not in data:
+            abort(400, description=f"Missing {field}")
 
-    data = request.get_json()
+    if not storage.get(City, data['city_id']):
+        abort(404, description="City not found")
+        
     instance = Professional(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)

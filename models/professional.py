@@ -18,7 +18,7 @@ class Professional(BaseModel, Base):
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
     phone_number = Column(String(128), nullable=True)
-    city = Column(String(60), nullable=False)
+    city_id = Column(String(128), ForeignKey('cities.id'), nullable=False)
     service_id = Column(String(60), ForeignKey('services.id'), nullable=True)
     biography = Column(String(1024), nullable=True)
     work_hours = Column(String(1024), nullable=True)
