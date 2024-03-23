@@ -24,3 +24,7 @@ def display_homepage():
 def display_AboutUs():
     """Handles request for profilepage"""
     return render_template('AboutUs.html')
+
+@static_pages_blueprint.route('/thank-you')
+def thank_you():
+    return render_template('thank_you.html')

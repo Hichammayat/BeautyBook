@@ -59,7 +59,7 @@ def register():
             # Vérifier si la requête a réussi
             if response.status_code == 201:
                 flash('User successfully registered!')
-                return redirect(url_for('static_pages.display_homepage'))
+                return redirect(url_for('auth.login'))
             else:
                 # Gérer les réponses d'erreur de l'API
                 flash('Failed to register user. Please try again.')

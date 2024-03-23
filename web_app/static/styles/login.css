@@ -13,7 +13,6 @@ body, html {
     min-height: 100vh;
     text-align: center;
     padding: 20px;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
 }
 
 form {

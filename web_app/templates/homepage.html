@@ -17,6 +17,7 @@
         <li><a href="#">Home</a></li>
         <li><a href="{{ url_for('static_pages.display_AboutUs') }}">About</a></li>
         <li><a href="{{ url_for('auth.login') }}" role="button">Log In</a></li>
+        <li><a href="{{ url_for('auth.register') }}" role="button">register</a></li>
     </ul>
 </nav>
 <main class="container">
@@ -41,7 +42,7 @@
                         <img src="https://source.unsplash.com/featured/?beauty" alt="Beauty Professional" />
                         <div class="carousel-content">
                             <h3>{{ professional.first_name }} {{ professional.last_name }}</h3>
-                            <p>{{ professional.biography }}</p>
+                            <p>Expertise en soins du visage et du corps, utilisant des produits naturels locaux pour une beauté authentique.</p>
                             <a href="{{ url_for('profile.display_profilebook', professional_id=professional.id) }}" target="_blank">View Profile</a>
                         </div>
                     </figure>

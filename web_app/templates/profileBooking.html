@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <link rel="stylesheet" href="../static/styles/profileBooking.css">
+    <!--<link rel="stylesheet" href="../static/styles/profileBooking.css">-->
     <title>Updated Professional Profile</title>
-    <script>
-        function toggleBookingForm() {
-            var formContainer = document.querySelector('.booking-form-container');
-            formContainer.style.display = formContainer.style.display === 'flex' ? 'none' : 'flex';
-        }
-    </script>
 </head>
 <body>
 <nav class="container-fluid">
@@ -42,7 +36,6 @@
             <p>[biography]</p>
             <h3>Work Hours</h3>
             <p>[work_hours]</p>
-            <button onclick="window.location.href='#';">Edit My Profile</button>
         </section>
     </div>
 </main>
@@ -50,11 +43,12 @@
 <div class="booking-form-container">
     <div class="booking-form">
         <h2>Book Your Appointment</h2>
-        <form action="/submit-booking" method="post">
+        <form action="/submit_booking" method="post">
             <input type="text" id="client_firstname" name="client_firstname" placeholder="First Name" required />
             <input type="text" id="client_lastname" name="client_lastname" placeholder="Last Name" required />
             <input type="tel" id="client_phone" name="client_phone" placeholder="Phone Number" required />
             <input type="datetime-local" id="appointment_time" name="appointment_time" required />
+            <input type="hidden" name="professional_email" value="{{ user_info['email'] }}" />
             <button type="submit">Confirm Booking</button>
         </form>
     </div>
@@ -62,5 +56,11 @@
 <footer class="container">
     <p>&copy; 2024 Beauty Book. All rights reserved.</p>
 </footer>
+<script>
+    function toggleBookingForm() {
+        var formContainer = document.querySelector('.booking-form-container');
+        formContainer.style.display = formContainer.style.display === 'flex' ? 'none' : 'flex';
+    }
+</script>
 </body>
 </html>
